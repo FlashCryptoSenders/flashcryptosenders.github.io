@@ -26,6 +26,20 @@
     <!-- CSS -->
     <link rel="stylesheet" href="https://flashusdtsender.xyz/assets/styles.css">
 
+    <!-- PWA Support -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#1e40af">
+    <link rel="apple-touch-icon" href="/assets/icon-192x192.png">
+    
+    <!-- SEO Verification -->
+    <meta name="google-site-verification" content="your-google-verification-code">
+    <meta name="yandex-verification" content="your-yandex-verification-code">
+    <meta name="bing-verification" content="your-bing-verification-code">
+
+    <!-- Preconnect to required origins -->
+    <link rel="preconnect" href="https://api.flashusdtsender.xyz">
+    <link rel="preconnect" href="https://t.me">
+
     <title>Flash USDT Sender - Instant Crypto Transfers</title>
 </head>
 <body>
@@ -169,6 +183,13 @@
         });
 
         console.log("Flash USDT Sender page loaded.");
+
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(registration => console.log('ServiceWorker registered:', registration))
+                .catch(error => console.error('ServiceWorker error:', error));
+        }
     </script>
 
 </body>
