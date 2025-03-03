@@ -1,0 +1,31 @@
+name: PWA Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-pwa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install Lighthouse CI
+        run: npm install -g @lhci/cli@0.9.x
+
+      - name: Run Lighthouse CI
+        run: lhci autorun
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+      - name: Test PWA Manifest
+        run: |
+          npx pwa-asset-generator ./assets/logo.svg ./assets/pwa
+          node scripts/validate-pwa.js

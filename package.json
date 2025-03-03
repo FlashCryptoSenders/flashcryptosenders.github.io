@@ -1,0 +1,16 @@
+{
+  "name": "flash-usdt-sender",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "generate-tiles": "node scripts/generate-tiles.js",
+    "test-pwa": "node scripts/pwa-test.js",
+    "validate-pwa": "node scripts/validate-pwa.js",
+    "deploy": "gh-pages -d ."
+  },
+  "devDependencies": {
+    "puppeteer": "^13.0.0",
+    "sharp": "^0.29.0",
+    "gh-pages": "^3.2.3"
+  }
+}
