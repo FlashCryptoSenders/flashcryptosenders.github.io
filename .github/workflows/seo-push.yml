@@ -1,0 +1,36 @@
+name: SEO Push
+
+on:
+  schedule:
+    - cron: '0 */5 * * *'  # Every 5 hours
+  workflow_dispatch:  # Manual trigger
+
+jobs:
+  seo-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Submit to IndexNow
+        run: |
+          curl -X POST "https://api.indexnow.org/IndexNow" \
+          -H "Content-Type: application/json" \
+          -d '{
+            "host": "flashusdtsender.xyz",
+            "key": "${{ secrets.INDEXNOW_KEY }}",
+            "urlList": [
+              "https://flashusdtsender.xyz/",
+              "https://flashusdtsender.xyz/features",
+              "https://flashusdtsender.xyz/buy"
+            ]
+          }'
+
+      - name: Ping Search Engines
+        run: |
+          curl "https://www.google.com/ping?sitemap=https://flashusdtsender.xyz/sitemap.xml"
+          curl "https://www.bing.com/ping?sitemap=https://flashusdtsender.xyz/sitemap.xml"
+          
+      - name: Generate SEO Report
+        run: |
+          echo "SEO Push completed at $(date)" >> seo-report.txt
+          echo "URLs submitted successfully" >> seo-report.txt
