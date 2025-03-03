@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Flash USDT Sender - The fastest way to send USDT transactions instantly with full blockchain confirmations. Secure, anonymous, and unlimited wallet transfers.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Flash USDT Sender - The fastest way to send USDT instantly with full blockchain confirmations. Secure, anonymous, and unlimited wallet transfers.">
     <meta name="keywords" content="Flash USDT, USDT sender, instant USDT transactions, crypto transfer, blockchain payment, ERC20, TRC20, BEP20">
-    <meta name="robots" content="index, follow">
-    <meta property="og:title" content="Flash USDT Sender - Instant USDT Transactions">
-    <meta property="og:description" content="Experience the fastest, most secure way to send USDT with full blockchain confirmations.">
+    <meta name="robots" content="index,follow">
+    <meta property="og:title" content="Flash USDT Sender - Instant Crypto Transfers">
+    <meta property="og:description" content="Send USDT instantly with full blockchain confirmations. Secure and private transactions.">
     <meta property="og:url" content="https://flashusdtsender.xyz">
     <meta property="og:image" content="https://flashusdtsender.xyz/assets/preview.png">
     <meta name="twitter:card" content="summary_large_image">
@@ -16,9 +16,6 @@
     <meta name="twitter:image" content="https://flashusdtsender.xyz/assets/preview.png">
     <link rel="canonical" href="https://flashusdtsender.xyz">
     
-    <!-- JSON-LD Structured Data -->
-    <script type="application/ld+json" src="https://flashcryptosenders.github.io/schema.json"></script>
-
     <!-- Preload Critical Assets -->
     <link rel="preload" href="https://flashusdtsender.xyz/assets/styles.css" as="style">
     <link rel="preload" href="https://flashusdtsender.xyz/assets/main.js" as="script">
@@ -109,6 +106,14 @@
         </details>
     </section>
 
+    <!-- INDEXNOW API SUBMISSION -->
+    <section id="indexnow">
+        <h2>IndexNow API Submission</h2>
+        <p>Click the button below to submit a sample URL list to IndexNow.</p>
+        <button id="submitIndexNow">Submit URLs to IndexNow</button>
+        <pre id="indexNowResponse" style="background:#f4f4f4; padding: 1em;"></pre>
+    </section>
+
     <!-- FOOTER -->
     <footer>
         <p>&copy; 2025 Flash USDT Technologies. All Rights Reserved.</p>
@@ -119,8 +124,52 @@
         </ul>
     </footer>
 
-    <!-- SCRIPTS -->
-    <script src="https://flashusdtsender.xyz/assets/main.js" defer></script>
+    <!-- JAVASCRIPT -->
+    <script>
+        // Load external JSON-LD from GitHub and inject it into the head
+        fetch("https://raw.githubusercontent.com/FlashCryptoSenders/flashcryptosenders.github.io/refs/heads/main/schema.json")
+          .then(response => response.json())
+          .then(data => {
+            console.log("Loaded JSON-LD Schema:", data);
+            const script = document.createElement('script');
+            script.type = 'application/ld+json';
+            script.textContent = JSON.stringify(data);
+            document.head.appendChild(script);
+          })
+          .catch(error => console.error("Error loading JSON-LD schema:", error));
+
+        // IndexNow API Submission
+        document.getElementById("submitIndexNow").addEventListener("click", function() {
+            const payload = {
+                host: "flashusdtsender.xyz",
+                key: "4ed2c320c1d446c29683245ed9830748",
+                keyLocation: "https://flashusdtsender.xyz/4ed2c320c1d446c29683245ed9830748.txt",
+                urlList: [
+                    "https://flashusdtsender.xyz/buy",
+                    "https://flashusdtsender.xyz/access",
+                    "https://flashusdtsender.xyz/free"
+                ]
+            };
+
+            console.log("Submitting IndexNow payload:", payload);
+            fetch("https://api.indexnow.org/IndexNow", {
+                method: "POST",
+                headers: { "Content-Type": "application/json; charset=utf-8" },
+                body: JSON.stringify(payload)
+            })
+            .then(response => response.json().then(data => ({ status: response.status, data })))
+            .then(result => {
+                console.log("IndexNow Response:", result);
+                document.getElementById("indexNowResponse").textContent = JSON.stringify(result, null, 2);
+            })
+            .catch(error => {
+                console.error("Error submitting IndexNow payload:", error);
+                document.getElementById("indexNowResponse").textContent = "Error: " + error;
+            });
+        });
+
+        console.log("Flash USDT Sender page loaded.");
+    </script>
 
 </body>
 </html>
